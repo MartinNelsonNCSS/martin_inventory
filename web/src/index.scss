@@ -784,12 +784,13 @@ button:active {
     rgba(58, 58, 58, 0.8), 
     rgba(42, 42, 42, 0.9)
   );
-  background-repeat: no-repeat;
-  background-position: center center;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
   border-radius: 3px;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
-  background-size: 70% 70%; // Reduce size for better centering
+  // Use 70% sizing for both width and height, no repeat
+  background-size: 70% 70% !important;
   color: #e0e0e0;
   border: 1px solid #555;
   transition: all 0.2s ease;
@@ -801,10 +802,11 @@ button:active {
   // Ensure background images layer correctly
   background-blend-mode: normal;
   
-  // Make sure the image shows above the gradient
+  // Make sure the image shows above the gradient and scales properly
   &[style*="background-image: url"] {
-    background-size: 70% 70%;
-    background-position: center center;
+    background-size: 70% 70% !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
   }
   
   &:hover {
