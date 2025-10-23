@@ -14,6 +14,7 @@ import { closeTooltip } from '../../store/tooltip';
 import InventoryContext from './InventoryContext';
 import { closeContextMenu } from '../../store/contextMenu';
 import Fade from '../utils/transitions/Fade';
+import BackpackInventory from './BackpackInventory';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
@@ -97,14 +98,12 @@ const Inventory: React.FC = () => {
           
           {/* Right Panel - Secondary Inventory & Actions */}
           <div className="tarkov-right-panel">
-            <div className="secondary-inventory-section">
-              
-            </div>
-            <div className="equipment-panel">
+             <div className="equipment-panel">
               <div className="inventory-label">Equipment</div>
               <DedicatedSlots />
             </div>
-            
+            <div className="inventory-label">Backpack</div>
+            <BackpackInventory/>
           </div>
           
           <Tooltip />

@@ -1,314 +1,440 @@
 // Import theme for mixins and variables
 @use 'theme' as *;
 
-// Tarkov-style Equipment Slots
+// Equipment panel with human silhouette overlay - improved alignment
 .dedicated-slots-container {
-  position: absolute;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  background: transparent;
-  border: none;
-  padding: 0;
-  box-shadow: none;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(135deg, 
+    rgba(#1a1a1a, 0.95), 
+    rgba(#0f0f0f, 0.98)
+  );
+  border: 2px solid #3a3a3a;
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 320px; // Increased from default to accommodate slots + silhouette
+  height: 95%;
+  min-height: 450px; // Ensure minimum height for all slots
+  max-height: 100%;
+  margin: 0;
+  overflow: hidden; // Prevent overflow
+  box-sizing: border-box;
 }
 
-.dedicated-slots-grid {
-  display: contents;
+// Human silhouette container with silhouette.png background
+.human-silhouette {
+  position: relative;
+  width: 200%; // Increased width to accommodate larger silhouette
+  height: 100%;
+  min-height: 400px;
+  max-height: 420px;
+  background: url('/images/siloutte.png') no-repeat center center;
+  background-size: 80% auto; // Make silhouette larger but not full width
+  margin: 0;
+  flex-shrink: 0;
+}
+
+// Positioned equipment slots using absolute positioning like reference image
+.equipment-slot-positioned {
+  position: absolute;
+  pointer-events: all;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
-  .weapon-slots-section,
-  .armor-slots-section,
-  .utility-slots-section {
-    display: contents;
-    
-    h4 {
-      display: none; // Hide section headers
+  // Slot-specific positioning adjustments and icons
+  &.equipment-helmet {
+    // Helmet on head - perfectly aligned
+    .inventory-slot {
+      border-color: #3498db;
+      transform: none;
+      
+      &::before {
+        content: "⛑️";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-weapon-primary {
+    // Primary weapon on right shoulder - no rotation
+    .inventory-slot {
+      border-color: #4a90e2;
+      transform: none;
+      
+      &::before {
+        content: "🔫";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-weapon-secondary {
+    // Secondary weapon on right hip - no rotation
+    .inventory-slot {
+      border-color: #4a90e2;
+      transform: none;
+      
+      &::before {
+        content: "🔫";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-weapon-melee {
+    // Melee weapon on left thigh - no rotation
+    .inventory-slot {
+      border-color: #e74c3c;
+      transform: none;
+      
+      &::before {
+        content: "🗡️";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-plate-carrier {
+    // Plate carrier on chest - no rotation
+    .inventory-slot {
+      border-color: #27ae60;
+      transform: none;
+      background: linear-gradient(135deg, 
+        rgba(#2a2a2a, 0.9), 
+        rgba(#1a1a1a, 0.95)
+      );
+      
+      &::before {
+        content: "🦺";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.08);
+      }
+    }
+  }
+  
+  &.equipment-armor-plate {
+    // Armor plate in carrier - no rotation
+    .inventory-slot {
+      border-color: #95a5a6;
+      transform: none;
+      opacity: 0.9;
+      
+      &::before {
+        content: "🛡️";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-secondary;
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-backpack {
+    // Backpack on left shoulder - no rotation
+    .inventory-slot {
+      border-color: #8e44ad;
+      transform: none;
+      
+      &::before {
+        content: "🎒";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  &.equipment-money {
+    // Money slot
+    .inventory-slot {
+      border-color: #2ecc71;
+      transform: none;
+      
+      &::before {
+        content: "💵";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-vest {
+    // Vest/armor on chest
+    .inventory-slot {
+      border-color: #27ae60;
+      transform: none;
+      
+      &::before {
+        content: "🦺";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.08);
+      }
+    }
+  }
+  
+  &.equipment-phone {
+    // Phone in pocket
+    .inventory-slot {
+      border-color: #3498db;
+      transform: none;
+      
+      &::before {
+        content: "📱";
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-primary;
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  &.equipment-wallet {
+    // Wallet in pocket - no rotation, just smaller
+    .inventory-slot {
+      border-color: #f39c12;
+      transform: scale(0.9);
+      
+      &::before {
+        content: "💳";
+        font-size: 20px;
+        transform: translate(-50%, -50%);
+      }
+      
+      &:hover {
+        border-color: $sunset-orange-secondary;
+        transform: scale(1.0);
+      }
     }
   }
 }
 
-// Containers use flex layout for positioning
-.weapon-slots-container,
-.armor-slots-container,
-.utility-slots-grid {
-  display: contents;
-}
-
-// Responsive Tarkov-style Equipment Slots
-.dedicated-slot {
-  position: relative;
-  width: calc(var(--grid-slot-size) + 12px);
-  height: calc(var(--grid-slot-size) + 12px);
-  background: linear-gradient(135deg, 
-    rgba(#3a3a3a, 0.8), 
-    rgba(#2a2a2a, 0.9)
-  );
-  border: 2px solid #555;
+// Enhanced inventory slot styling for equipment overlay - better sizing
+.equipment-slot-positioned .inventory-slot {
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-size: 70%;
-  background-position: center;
-  background-repeat: no-repeat;
-  flex-shrink: 0;
+  background: linear-gradient(135deg, 
+    rgba(#2a2a2a, 0.9), 
+    rgba(#1a1a1a, 0.95)
+  );
   box-shadow: 
-    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.5),
     inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(2px);
+  position: relative;
+  
+  // Add equipment type icons as background
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    opacity: 0.3;
+    z-index: 1;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
   
   &:hover {
-    border-color: #777;
-    background: linear-gradient(135deg, 
-      rgba(#4a4a4a, 0.8), 
-      rgba(#3a3a3a, 0.9)
-    );
-    transform: translateY(-1px);
     box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      0 0 12px rgba($sunset-orange-primary, 0.4),
       inset 0 1px 2px rgba(255, 255, 255, 0.15);
-      
-    .slot-emoji {
-      filter: grayscale(0%) brightness(1.1);
-    }
+    transform: translateY(-2px);
     
-    .slot-label {
-      color: #ccc;
+    &::before {
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(1.1);
     }
   }
   
-  // Equipped state
-  &:not(:empty), &.has-item, &.equipped {
-    border-color: #888;
-    background: linear-gradient(135deg, 
-      rgba(#4a4a4a, 0.9), 
-      rgba(#3a3a3a, 0.8)
-    );
+  // When slot has an item, hide the icon
+  &:not(:empty) {
     box-shadow: 
       0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 8px rgba($sunset-orange-secondary, 0.6),
       inset 0 1px 2px rgba(255, 255, 255, 0.1);
       
-    .slot-emoji {
-      filter: grayscale(0%) brightness(1);
-    }
-    
-    .slot-label {
-      color: #ccc;
-      font-weight: 600;
+    &::before {
+      opacity: 0;
     }
   }
   
-  // Drop states
-  &.drop-valid {
-    border-color: #4ade80;
-    background: rgba(74, 222, 128, 0.2);
-    box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+  // Enhanced rarity effects for positioned equipment
+  &.common {
+    border-color: #9d9d9d;
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 6px rgba(#9d9d9d, 0.4);
   }
   
-  &.drop-invalid {
-    border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.2);
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
-  }
-}
-
-// Responsive Tarkov-style slot placeholders
-.dedicated-slot-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  
-  .slot-emoji {
-    font-size: calc(var(--grid-slot-size) * 0.4);
-    opacity: 0.5;
-    filter: grayscale(100%) brightness(0.6);
-    margin-bottom: 2px;
-    transition: all 0.2s ease;
+  &.uncommon {
+    border-color: #1eff00;
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 8px rgba(#1eff00, 0.5);
   }
   
-  .slot-label {
-    font-size: calc(var(--grid-slot-size) * 0.13);
-    color: #666;
-    opacity: 0.7;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-align: center;
-    line-height: 1;
-    font-family: 'Consolas', monospace;
-    transition: all 0.2s ease;
+  &.rare {
+    border-color: #0070dd;
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 10px rgba(#0070dd, 0.6);
+  }
+  
+  &.epic {
+    border-color: #a335ee;
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 12px rgba(#a335ee, 0.7);
+  }
+  
+  &.legendary {
+    border-color: $sunset-orange-primary;
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 15px rgba($sunset-orange-primary, 0.8);
+    animation: legendary-pulse 2s ease-in-out infinite alternate;
   }
 }
 
-// When slot has item, hide placeholder
-.dedicated-slot:not(:empty) .dedicated-slot-placeholder {
-  display: none;
-}
-
-// Slot-specific positioning for Tarkov layout
-.dedicated-slot {
-  &.weapon-primary .slot-emoji::before { content: "🔫"; }
-  &.weapon-primary .slot-label::before { content: "PRI"; }
-
-  &.weapon-secondary .slot-emoji::before { content: "🔫"; }
-  &.weapon-secondary .slot-label::before { content: "SEC"; }
-
-  &.weapon-melee .slot-emoji::before { content: "🗡️"; }
-  &.weapon-melee .slot-label::before { content: "MEL"; }
-
-  &.wallet .slot-emoji::before { content: "💳"; }
-  &.wallet .slot-label::before { content: "WAL"; }
-
-  &.backpack .slot-emoji::before { content: "🎒"; }
-  &.backpack .slot-label::before { content: "BAG"; }
-
-  &.plate_carrier .slot-emoji::before { content: "🦺"; }
-  &.plate_carrier .slot-label::before { content: "ARM"; }
-
-  &.plate .slot-emoji::before { content: "🛡️"; }
-  &.plate .slot-label::before { content: "PLT"; }
-}
-
-// Item count and durability - Tarkov style
-.dedicated-slot-info {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1px;
-  
-  .item-count {
-    background: rgba(#1a1a1a, 0.9);
-    color: #fff;
-    font-size: 9px;
-    padding: 1px 3px;
-    border-radius: 2px;
-    font-weight: 700;
-    border: 1px solid #444;
-    font-family: 'Consolas', monospace;
+// Legendary pulse animation
+@keyframes legendary-pulse {
+  from {
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 15px rgba($sunset-orange-primary, 0.8);
   }
-  
-  .durability-bar {
-    height: 2px;
-    width: 16px;
-    background: rgba(#3a3a3a, 0.8);
-    border-radius: 1px;
-    overflow: hidden;
-    
-    &::after {
-      content: '';
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, 
-        #ef4444 0%, 
-        #eab308 50%, 
-        #22c55e 100%
-      );
-      width: var(--durability, 100%);
-      transition: width 0.3s ease;
-    }
+  to {
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba($sunset-orange-primary, 1.0);
   }
 }
 
-// Slot-specific emoji and labels
-.dedicated-slot.weapon-primary .slot-emoji::before { content: "🔫"; }
-.dedicated-slot.weapon-primary .slot-label::before { content: "PRIMARY"; }
-
-.dedicated-slot.weapon-secondary .slot-emoji::before { content: "🔫"; }
-.dedicated-slot.weapon-secondary .slot-label::before { content: "SECONDARY"; }
-
-.dedicated-slot.weapon-melee .slot-emoji::before { content: "🗡️"; }
-.dedicated-slot.weapon-melee .slot-label::before { content: "MELEE"; }
-
-.dedicated-slot.wallet .slot-emoji::before { content: "💳"; }
-.dedicated-slot.wallet .slot-label::before { content: "WALLET"; }
-
-.dedicated-slot.backpack .slot-emoji::before { content: "🎒"; }
-.dedicated-slot.backpack .slot-label::before { content: "BACKPACK"; }
-
-.dedicated-slot.plate_carrier .slot-emoji::before { content: "🦺"; }
-.dedicated-slot.plate_carrier .slot-label::before { content: "CARRIER"; }
-
-.dedicated-slot.plate .slot-emoji::before { content: "🛡️"; }
-.dedicated-slot.plate .slot-label::before { content: "PLATE"; }
-
-// Item count and durability (same as inventory slots)
-.dedicated-slot-info {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1px;
-  
-  .item-count {
-    background: linear-gradient(135deg, $sunset-orange-primary, $sunset-orange-secondary);
+// Enhanced item info styling for positioned equipment
+.equipment-slot-positioned .item-slot-wrapper {
+  .item-slot-header-wrapper {
+    background: linear-gradient(135deg, 
+      rgba($sunset-orange-primary, 0.9), 
+      rgba($sunset-orange-secondary, 0.95)
+    );
     color: $urban-black;
-    font-size: 8px;
-    padding: 1px 4px;
-    border-radius: 6px;
+    border-radius: 4px 4px 0 0;
     font-weight: 700;
-    border: 1px solid rgba($sunset-orange-secondary, 0.8);
+    font-size: 8px;
   }
   
-  .durability-bar {
-    height: 2px;
-    width: 20px;
-    background: rgba($concrete-gray-dark, 0.3);
-    border-radius: 1px;
-    overflow: hidden;
+  .inventory-slot-label-box {
+    background: linear-gradient(135deg, 
+      rgba(#1a1a1a, 0.95), 
+      rgba(#0f0f0f, 0.98)
+    );
+    border-radius: 0 0 4px 4px;
     
-    &::after {
-      content: '';
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, 
-        #ef4444 0%, 
-        #eab308 50%, 
-        $sunset-orange-primary 100%
-      );
-      width: var(--durability, 100%);
-      transition: width 0.3s ease;
+    .inventory-slot-label-text {
+      color: $sunset-orange-secondary;
+      font-weight: 600;
+      font-size: 7px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     }
   }
 }
 
-// Responsive Design - using CSS custom properties
-.dedicated-slots-container {
-  gap: var(--grid-slot-gap);
-}
-
-.slot-emoji {
-  font-size: calc(var(--grid-slot-size) * 0.4);
-  transition: all 0.2s ease;
-}
-
-.slot-label {
-  font-size: calc(var(--grid-slot-size) * 0.13);
-  transition: all 0.2s ease;
-}
-
-// Grid layout adjustments for different screen sizes
+// Responsive Design
 @media (max-width: #{$breakpoint-tablet}) {
   .dedicated-slots-container {
-    grid-template-columns: repeat(6, 1fr);
+    padding: 12px;
+    min-height: 380px;
+    max-width: 280px; // Proportionally smaller for tablet
+  }
+  
+  .human-silhouette {
+    width: 160px; // Slightly smaller but still visible
+    min-height: 340px;
+    max-height: 360px;
+  }
+  
+  .equipment-slot-positioned .inventory-slot {
+    width: 36px;
+    height: 36px;
+    
+    &::before {
+      font-size: 16px;
+    }
   }
 }
 
 @media (max-width: #{$breakpoint-mobile}) {
   .dedicated-slots-container {
-    grid-template-columns: repeat(5, 1fr);
-    gap: calc(var(--grid-slot-gap) * 0.8);
-    padding: 6px;
-    max-height: calc(var(--grid-slot-size) + 20px);
+    padding: 10px;
+    min-height: 320px;
+    max-width: 240px; // Smaller for mobile but still functional
+  }
+  
+  .human-silhouette {
+    width: 140px; // Compact for mobile
+    min-height: 280px;
+    max-height: 300px;
+  }
+  
+  .equipment-slot-positioned .inventory-slot {
+    width: 32px;
+    height: 32px;
+    
+    &::before {
+      font-size: 14px;
+    }
   }
 }

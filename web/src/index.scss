@@ -13,7 +13,7 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(26, 26, 26, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
   border: 2px solid #3a3a3a;
   border-radius: 6px;
   padding: 12px;
@@ -28,12 +28,17 @@
   }
 }
 
-// Equipment panel styling - Tarkov military style
+// Equipment panel styling - Tarkov military style (pinned to top)
 .equipment-panel {
-  background: rgba(26, 26, 26, 0.8);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(26, 26, 26, 0.665); // Reduced from 0.95 to 0.665 (30% more transparent)
   border: 2px solid #3a3a3a;
   border-radius: 6px;
   padding: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 // Inventory labels - Tarkov style
@@ -46,7 +51,7 @@
   text-align: left;
   margin-bottom: 8px;
   padding: 4px 8px;
-  background: rgba(58, 58, 58, 0.6);
+  background: rgba(58, 58, 58, 0.42); // Reduced from 0.6 to 0.42 (30% more transparent)
   border-left: 3px solid #666;
   font-family: 'Consolas', monospace;
 }
@@ -144,8 +149,8 @@ input[type='number']::-webkit-outer-spin-button {
   width: 100%;
   color: #e0e0e0;
   background: linear-gradient(135deg, 
-    rgba(26, 26, 26, 0.95), 
-    rgba(45, 45, 45, 0.9)
+    rgba(26, 26, 26, 0.665), // Reduced from 0.95 to 0.665 (30% more transparent)
+    rgba(45, 45, 45, 0.63) // Reduced from 0.9 to 0.63 (30% more transparent)
   );
   font-family: 'Consolas', 'Monaco', monospace;
 }
@@ -235,8 +240,8 @@ button:active {
   margin: 0 auto;
   padding: 16px;
   background: linear-gradient(135deg, 
-    rgba(26, 26, 26, 0.95), 
-    rgba(45, 45, 45, 0.9)
+    rgba(26, 26, 26, 0.665), // Reduced from 0.95 to 0.665 (30% more transparent)
+    rgba(45, 45, 45, 0.63) // Reduced from 0.9 to 0.63 (30% more transparent)
   );
   color: #e0e0e0;
   font-family: 'Consolas', 'Monaco', monospace;
@@ -252,25 +257,25 @@ button:active {
   
   // Desktop layout - three columns  
   @media (min-width: #{$breakpoint-tablet}) {
-    grid-template-columns: 300px 1fr 280px;
+    grid-template-columns: 300px 1fr 322px; // Increased right panel from 280px to 322px (15% increase)
   }
   
   // Large desktop - wider panels
   @media (min-width: #{$breakpoint-desktop}) {
-    grid-template-columns: 320px 1fr 300px;
+    grid-template-columns: 320px 1fr 345px; // Increased right panel from 300px to 345px (15% increase)
   }
   
   // Ultra-wide - even more space
   @media (min-width: #{$breakpoint-large}) {
-    grid-template-columns: 340px 1fr 320px;
+    grid-template-columns: 340px 1fr 368px; // Increased right panel from 320px to 368px (15% increase)
   }
 }
 
 // Responsive Left Panel - Character & Equipment
 .tarkov-left-panel {
   background: linear-gradient(135deg, 
-    rgba(30, 30, 30, 0.9), 
-    rgba(42, 42, 42, 0.8)
+    rgba(30, 30, 30, 0.63), // Reduced from 0.9 to 0.63 (30% more transparent)
+    rgba(42, 42, 42, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
   );
   border: 2px solid #3a3a3a;
   border-radius: 8px;
@@ -300,8 +305,8 @@ button:active {
   position: relative;
   height: 400px;
   background: linear-gradient(135deg, 
-    rgba(42, 42, 42, 0.8), 
-    rgba(26, 26, 26, 0.9)
+    rgba(42, 42, 42, 0.56), // Reduced from 0.8 to 0.56 (30% more transparent)
+    rgba(26, 26, 26, 0.63) // Reduced from 0.9 to 0.63 (30% more transparent)
   );
   border: 2px solid #444;
   border-radius: 8px;
@@ -314,8 +319,8 @@ button:active {
   width: 150px;
   height: 300px;
   background: linear-gradient(135deg, 
-    rgba(58, 58, 58, 0.6), 
-    rgba(42, 42, 42, 0.8)
+    rgba(58, 58, 58, 0.42), // Reduced from 0.6 to 0.42 (30% more transparent)
+    rgba(42, 42, 42, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
   );
   border: 2px solid #555;
   border-radius: 20px;
@@ -362,7 +367,7 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(26, 26, 26, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
   border: 2px solid #3a3a3a;
   border-radius: 6px;
   padding: 12px;
@@ -381,15 +386,13 @@ button:active {
     text-transform: uppercase;
   }
   
-  .bar {
-    flex: 1;
-    height: 8px;
-    background: rgba(58, 58, 58, 0.8);
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid #555;
-    
-    .fill {
+    .bar {
+      flex: 1;
+      height: 8px;
+      background: rgba(58, 58, 58, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #555;    .fill {
       height: 100%;
       transition: width 0.3s ease;
     }
@@ -403,8 +406,8 @@ button:active {
 // Center Panel - Main Inventory
 .tarkov-center-panel {
   background: linear-gradient(135deg, 
-    rgba(30, 30, 30, 0.9), 
-    rgba(42, 42, 42, 0.8)
+    rgba(30, 30, 30, 0.63), // Reduced from 0.9 to 0.63 (30% more transparent)
+    rgba(42, 42, 42, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
   );
   border: 2px solid #3a3a3a;
   border-radius: 8px;
@@ -465,8 +468,8 @@ button:active {
 // Responsive Right Panel - Secondary Inventory & Actions
 .tarkov-right-panel {
   background: linear-gradient(135deg, 
-    rgba(30, 30, 30, 0.9), 
-    rgba(42, 42, 42, 0.8)
+    rgba(30, 30, 30, 0.63), // Reduced from 0.9 to 0.63 (30% more transparent)
+    rgba(42, 42, 42, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
   );
   border: 2px solid #3a3a3a;
   border-radius: 8px;
@@ -505,7 +508,7 @@ button:active {
 }
 
 .action-panel {
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(26, 26, 26, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
   border: 2px solid #3a3a3a;
   border-radius: 6px;
   padding: 12px;
@@ -514,7 +517,7 @@ button:active {
 .inventory-control {
   display: flex;
   justify-content: center;
-  background: rgba(#1a1a1a, 0.8);
+  background: rgba(#1a1a1a, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
   border: 2px solid #3a3a3a;
   border-radius: 6px;
   padding: 12px;
@@ -532,7 +535,7 @@ button:active {
     width: 100%;
     padding: 8px 12px;
     color: #e0e0e0;
-    background: rgba(#2a2a2a, 0.8);
+    background: rgba(#2a2a2a, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
     border: 2px solid #444;
     border-radius: 4px;
     font-family: 'Consolas', monospace;
@@ -542,7 +545,7 @@ button:active {
     
     &:focus {
       border-color: #666;
-      background: rgba(#3a3a3a, 0.8);
+      background: rgba(#3a3a3a, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
     }
     
     &::placeholder {
@@ -554,8 +557,8 @@ button:active {
     font-size: 12px;
     color: #e0e0e0;
     background: linear-gradient(135deg, 
-      rgba(#3a3a3a, 0.9), 
-      rgba(#2a2a2a, 0.8)
+      rgba(#3a3a3a, 0.63), // Reduced from 0.9 to 0.63 (30% more transparent)
+      rgba(#2a2a2a, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
     );
     border: 2px solid #555;
     transition: all 0.2s ease;
@@ -570,8 +573,8 @@ button:active {
     
     &:hover {
       background: linear-gradient(135deg, 
-        rgba(#4a4a4a, 0.9), 
-        rgba(#3a3a3a, 0.8)
+        rgba(#4a4a4a, 0.63), // Reduced from 0.9 to 0.63 (30% more transparent)
+        rgba(#3a3a3a, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
       );
       border-color: #777;
       color: #fff;
@@ -698,7 +701,7 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.035); // Reduced from 0.05 to 0.035 (30% more transparent)
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 2px solid $sunset-orange-primary;
@@ -737,7 +740,7 @@ button:active {
   padding: 8px;
   flex: 1; // Take all available space
   min-height: 0; // Allow shrinking
-  background: rgba(42, 42, 42, 0.4);
+  background: rgba(42, 42, 42, 0.28); // Reduced from 0.4 to 0.28 (30% more transparent)
   border: 1px solid #444;
   border-radius: 4px;
   align-content: start; // Align rows to start
@@ -781,8 +784,8 @@ button:active {
   min-width: var(--grid-slot-size); // Minimum size fallback
   min-height: var(--grid-slot-size); // Minimum size fallback
   background: linear-gradient(135deg, 
-    rgba(58, 58, 58, 0.8), 
-    rgba(42, 42, 42, 0.9)
+    rgba(58, 58, 58, 0.56), // Reduced from 0.8 to 0.56 (30% more transparent)
+    rgba(42, 42, 42, 0.63) // Reduced from 0.9 to 0.63 (30% more transparent)
   );
   background-repeat: no-repeat !important;
   background-position: center center !important;
@@ -812,8 +815,8 @@ button:active {
   &:hover {
     border-color: #777;
     background: linear-gradient(135deg, 
-      rgba(74, 74, 74, 0.8), 
-      rgba(58, 58, 58, 0.9)
+      rgba(74, 74, 74, 0.56), // Reduced from 0.8 to 0.56 (30% more transparent)
+      rgba(58, 58, 58, 0.63) // Reduced from 0.9 to 0.63 (30% more transparent)
     );
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -823,8 +826,8 @@ button:active {
   &:not(:empty), &.has-item {
     border-color: #888;
     background: linear-gradient(135deg, 
-      rgba(74, 74, 74, 0.9), 
-      rgba(58, 58, 58, 0.8)
+      rgba(74, 74, 74, 0.63), // Reduced from 0.9 to 0.63 (30% more transparent)
+      rgba(58, 58, 58, 0.56) // Reduced from 0.8 to 0.56 (30% more transparent)
     );
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
   }
@@ -866,7 +869,7 @@ button:active {
   position: absolute;
   bottom: 2px;
   right: 2px;
-  background: rgba(#1a1a1a, 0.9);
+  background: rgba(#1a1a1a, 0.63); // Reduced from 0.9 to 0.63 (30% more transparent)
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -883,7 +886,7 @@ button:active {
   left: 2px;
   right: 2px;
   height: 3px;
-  background: rgba(#1a1a1a, 0.8);
+  background: rgba(#1a1a1a, 0.56); // Reduced from 0.8 to 0.56 (30% more transparent)
   border-radius: 1px;
   overflow: hidden;
   
