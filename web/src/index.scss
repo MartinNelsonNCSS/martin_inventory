@@ -17,9 +17,8 @@
   border: 2px solid #3a3a3a;
   border-radius: 6px;
   padding: 12px;
-  margin-bottom: 12px;
-  height: auto;
-  max-height: calc(100vh - 220px); // Constrain height
+  flex: 1; // Take equal space in split container
+  min-height: 0; // Allow shrinking for flex
   overflow: hidden; // Prevent container overflow
   
   // Make the inventory grid the scrollable part
@@ -415,15 +414,22 @@ button:active {
   overflow: hidden;
   height: 100%;
   max-height: calc(95vh - 32px); // Prevent spillover
+}
+
+// Split container for equal height inventories
+.split-inventory-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0; // Allow flex children to shrink
   
-  // Ensure content doesn't overflow
+  // Make both inventory sections equal height
   > * {
-    flex-shrink: 0;
-    
-    &:last-child {
-      flex: 1;
-      overflow: hidden;
-    }
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -698,8 +704,8 @@ button:active {
   border: 2px solid $sunset-orange-primary;
   border-radius: 8px;
   padding: 12px;
-  height: 100%;
-  max-height: calc(100vh - 180px); // Constrain overall height
+  flex: 1; // Take available space
+  min-height: 0; // Allow shrinking
   overflow: hidden; // Prevent wrapper overflow
 }
 
@@ -730,34 +736,37 @@ button:active {
   gap: var(--grid-slot-gap);
   overflow-y: auto;
   padding: 8px;
-  height: 100%;
-  max-height: calc(100vh - 200px); // Prevent spillover
+  flex: 1; // Take all available space
+  min-height: 0; // Allow shrinking
   background: rgba(42, 42, 42, 0.4);
   border: 1px solid #444;
   border-radius: 4px;
   justify-content: center; // Center the 5-column grid
   align-content: start; // Align rows to start
   
-  // Custom scrollbar styling
+  // Ensure minimum grid width for 5 columns
+  min-width: calc(5 * var(--grid-slot-size) + 4 * var(--grid-slot-gap) + 16px);
+  
+  // Better scrollbar for inventory
   scrollbar-width: thin;
-  scrollbar-color: rgba($sunset-orange-primary, 0.8) rgba($concrete-gray-dark, 0.3);
+  scrollbar-color: #{rgba($sunset-orange-primary, 0.8)} #{rgba($concrete-gray-dark, 0.3)};
   
   &::-webkit-scrollbar {
     width: 8px;
-    background: rgba($concrete-gray-dark, 0.3);
+    background: #{rgba($concrete-gray-dark, 0.3)};
   }
-
+  
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, $sunset-orange-primary, $sunset-orange-secondary);
+    background: linear-gradient(135deg, #{$sunset-orange-primary}, #{$sunset-orange-secondary});
     border-radius: 4px;
     
     &:hover {
-      background: $sunset-orange-primary;
+      background: #{$sunset-orange-primary};
     }
   }
-
+  
   &::-webkit-scrollbar-track {
-    background: rgba($urban-black, 0.2);
+    background: #{rgba($urban-black, 0.2)};
     border-radius: 4px;
   }
 }

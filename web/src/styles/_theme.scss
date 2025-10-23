@@ -155,41 +155,41 @@ $gridGap: 2px;
 // CSS Custom Properties for responsive grid sizing
 :root {
   // Mobile (up to 768px) - smaller slots, fixed 5 columns
-  --grid-slot-size: 42px;
+  --grid-slot-size: 45px;
   --grid-slot-gap: 2px;
   --grid-columns: 5; // Always 5 columns for inventory
-  --drag-preview-size: 42px;
+  --drag-preview-size: 45px;
   
   // Tablet (768px - 1024px)
   @media (min-width: #{$breakpoint-mobile}) {
-    --grid-slot-size: 48px;
-    --grid-slot-gap: 2px;
+    --grid-slot-size: 52px;
+    --grid-slot-gap: 3px;
     --grid-columns: 5; // Always 5 columns for inventory
-    --drag-preview-size: 48px;
+    --drag-preview-size: 52px;
   }
   
   // Desktop (1024px - 1440px)
   @media (min-width: #{$breakpoint-tablet}) {
-    --grid-slot-size: 54px;
+    --grid-slot-size: 58px;
     --grid-slot-gap: 3px;
     --grid-columns: 5; // Always 5 columns for inventory
-    --drag-preview-size: 54px;
+    --drag-preview-size: 58px;
   }
   
   // Large Desktop (1440px - 1920px)
   @media (min-width: #{$breakpoint-desktop}) {
-    --grid-slot-size: 60px;
-    --grid-slot-gap: 3px;
+    --grid-slot-size: 65px;
+    --grid-slot-gap: 4px;
     --grid-columns: 5; // Always 5 columns for inventory
-    --drag-preview-size: 60px;
+    --drag-preview-size: 65px;
   }
   
   // Ultra-wide (1920px+)
   @media (min-width: #{$breakpoint-large}) {
-    --grid-slot-size: 68px;
+    --grid-slot-size: 72px;
     --grid-slot-gap: 4px;
     --grid-columns: 5; // Always 5 columns for inventory
-    --drag-preview-size: 68px;
+    --drag-preview-size: 72px;
   }
 }
 

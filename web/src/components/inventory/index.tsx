@@ -89,8 +89,10 @@ const Inventory: React.FC = () => {
                 <span>Weight: 15.2 / 35.0 kg</span>
               </div>
             </div>
-            <LeftInventory />
-            <RightInventory />
+            <div className="split-inventory-container">
+              <LeftInventory />
+              <RightInventory />
+            </div>
           </div>
           
           {/* Right Panel - Secondary Inventory & Actions */}
