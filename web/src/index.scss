@@ -188,13 +188,13 @@ button:active {
   @include sunset-glow;
 }
 
-// Responsive Tarkov-Style Inventory Layout
+// Responsive Tarkov-Style Inventory Layout - Center 2/3rds
 .tarkov-inventory-wrapper {
   display: grid;
   grid-template-rows: 1fr;
   gap: 16px;
   height: 95vh;
-  width: 100%;
+  width: 66.67%; // 2/3rds of the screen width
   margin: 0 auto;
   padding: 16px;
   background: linear-gradient(135deg, 
@@ -209,26 +209,22 @@ button:active {
   
   // Tablet layout - two columns
   @media (min-width: #{$breakpoint-mobile}) {
-    grid-template-columns: 340px 1fr;
-    max-width: 1200px;
+    grid-template-columns: 280px 1fr;
   }
   
   // Desktop layout - three columns  
   @media (min-width: #{$breakpoint-tablet}) {
-    grid-template-columns: 380px 1fr 350px;
-    max-width: 1600px;
+    grid-template-columns: 300px 1fr 280px;
   }
   
   // Large desktop - wider panels
   @media (min-width: #{$breakpoint-desktop}) {
-    grid-template-columns: 420px 1fr 380px;
-    max-width: 1800px;
+    grid-template-columns: 320px 1fr 300px;
   }
   
   // Ultra-wide - even more space
   @media (min-width: #{$breakpoint-large}) {
-    grid-template-columns: 450px 1fr 400px;
-    max-width: 2200px;
+    grid-template-columns: 340px 1fr 320px;
   }
 }
 
