@@ -1,0 +1,170 @@
+@use '../../styles/theme' as theme;
+
+.inventory-tabs-container {
+  position: relative;
+  margin-bottom: 0.75rem;
+  
+  &:focus {
+    outline: 2px solid theme.$sunset-orange-primary;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+.inventory-tabs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0 0.25rem;
+  
+  .inventory-tabs-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: theme.$sunset-orange-primary;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .inventory-tabs-hint {
+    font-size: 0.75rem;
+    color: theme.$concrete-medium;
+    opacity: 0.7;
+    font-style: italic;
+  }
+}
+
+.inventory-tabs {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(theme.$concrete-gray-dark, 0.1);
+  border: 1px solid rgba(theme.$sunset-orange-primary, 0.3);
+  border-radius: 6px;
+  padding: 0.25rem;
+  backdrop-filter: blur(2px);
+}
+
+.inventory-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: theme.$concrete-gray-light;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  justify-content: center;
+  
+  &:hover {
+    background: rgba(theme.$sunset-orange-primary, 0.15);
+    border-color: theme.$sunset-orange-primary;
+    color: theme.$sunset-orange-primary;
+    transform: translateY(-1px);
+  }
+  
+  &.active {
+    background: linear-gradient(135deg, theme.$sunset-orange-primary, theme.$sunset-orange-secondary);
+    border-color: theme.$sunset-orange-secondary;
+    color: theme.$urban-black;
+    box-shadow: 
+      0 4px 12px rgba(theme.$sunset-orange-primary, 0.4),
+      0 0 20px rgba(theme.$sunset-orange-primary, 0.2);
+    
+    .inventory-tab-icon {
+      filter: drop-shadow(0 1px 2px rgba(theme.$urban-black, 0.6));
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: theme.$concrete-gray-dark;
+    color: theme.$concrete-medium;
+    
+    &:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: transparent;
+    }
+  }
+}
+
+.inventory-tab-icon {
+  font-size: 1rem;
+  line-height: 1;
+  transition: filter 0.2s ease;
+}
+
+.inventory-tab-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inventory-tab-indicator {
+  position: absolute;
+  bottom: -0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, theme.$sunset-orange-secondary, transparent);
+  border-radius: 1px;
+  animation: pulse-glow 2s infinite;
+}
+
+.inventory-tab-content-indicator {
+  margin-top: 0.5rem;
+  text-align: center;
+  
+  .current-view-label {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, #{theme.$sunset-orange-primary}20, #{theme.$sunset-orange-secondary}10);
+    border: 1px solid #{theme.$sunset-orange-primary}30;
+    border-radius: 12px;
+    color: theme.$sunset-orange-secondary;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(2px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 4px theme.$sunset-orange-secondary;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 8px theme.$sunset-orange-primary, 0 0 12px theme.$sunset-orange-secondary;
+  }
+}
+
+// Responsive design for smaller screens
+@media (max-width: 768px) {
+  .inventory-tabs {
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+  
+  .inventory-tab {
+    min-width: unset;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .inventory-tabs-header {
+    .inventory-tabs-hint {
+      display: none;
+    }
+  }
+}

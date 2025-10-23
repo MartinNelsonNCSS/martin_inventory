@@ -1,0 +1,325 @@
+// Import theme for mixins and variables
+@use 'theme' as *;
+
+// Tarkov-style Equipment Slots
+.dedicated-slots-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.dedicated-slots-grid {
+  display: contents;
+  
+  .weapon-slots-section,
+  .armor-slots-section,
+  .utility-slots-section {
+    display: contents;
+    
+    h4 {
+      display: none; // Hide section headers
+    }
+  }
+}
+
+// Containers use flex layout for positioning
+.weapon-slots-container,
+.armor-slots-container,
+.utility-slots-grid {
+  display: contents;
+}
+
+// Tarkov-style Equipment Slots
+.dedicated-slot {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, 
+    rgba(#3a3a3a, 0.8), 
+    rgba(#2a2a2a, 0.9)
+  );
+  border: 2px solid #555;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  
+  &:hover {
+    border-color: #777;
+    background: linear-gradient(135deg, 
+      rgba(#4a4a4a, 0.8), 
+      rgba(#3a3a3a, 0.9)
+    );
+    transform: translateY(-1px);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.15);
+      
+    .slot-emoji {
+      filter: grayscale(0%) brightness(1.1);
+    }
+    
+    .slot-label {
+      color: #ccc;
+    }
+  }
+  
+  // Equipped state
+  &:not(:empty), &.has-item, &.equipped {
+    border-color: #888;
+    background: linear-gradient(135deg, 
+      rgba(#4a4a4a, 0.9), 
+      rgba(#3a3a3a, 0.8)
+    );
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.1);
+      
+    .slot-emoji {
+      filter: grayscale(0%) brightness(1);
+    }
+    
+    .slot-label {
+      color: #ccc;
+      font-weight: 600;
+    }
+  }
+  
+  // Drop states
+  &.drop-valid {
+    border-color: #4ade80;
+    background: rgba(74, 222, 128, 0.2);
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+  }
+  
+  &.drop-invalid {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+  }
+}
+
+// Tarkov-style slot placeholders
+.dedicated-slot-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  
+  .slot-emoji {
+    font-size: 24px;
+    opacity: 0.5;
+    filter: grayscale(100%) brightness(0.6);
+    margin-bottom: 2px;
+    transition: all 0.2s ease;
+  }
+  
+  .slot-label {
+    font-size: 8px;
+    color: #666;
+    opacity: 0.7;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1;
+    font-family: 'Consolas', monospace;
+    transition: all 0.2s ease;
+  }
+}
+
+// When slot has item, hide placeholder
+.dedicated-slot:not(:empty) .dedicated-slot-placeholder {
+  display: none;
+}
+
+// Slot-specific positioning for Tarkov layout
+.dedicated-slot {
+  &.weapon-primary .slot-emoji::before { content: "🔫"; }
+  &.weapon-primary .slot-label::before { content: "PRI"; }
+
+  &.weapon-secondary .slot-emoji::before { content: "🔫"; }
+  &.weapon-secondary .slot-label::before { content: "SEC"; }
+
+  &.weapon-melee .slot-emoji::before { content: "🗡️"; }
+  &.weapon-melee .slot-label::before { content: "MEL"; }
+
+  &.wallet .slot-emoji::before { content: "💳"; }
+  &.wallet .slot-label::before { content: "WAL"; }
+
+  &.backpack .slot-emoji::before { content: "🎒"; }
+  &.backpack .slot-label::before { content: "BAG"; }
+
+  &.plate_carrier .slot-emoji::before { content: "🦺"; }
+  &.plate_carrier .slot-label::before { content: "ARM"; }
+
+  &.plate .slot-emoji::before { content: "🛡️"; }
+  &.plate .slot-label::before { content: "PLT"; }
+}
+
+// Item count and durability - Tarkov style
+.dedicated-slot-info {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  
+  .item-count {
+    background: rgba(#1a1a1a, 0.9);
+    color: #fff;
+    font-size: 9px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-weight: 700;
+    border: 1px solid #444;
+    font-family: 'Consolas', monospace;
+  }
+  
+  .durability-bar {
+    height: 2px;
+    width: 16px;
+    background: rgba(#3a3a3a, 0.8);
+    border-radius: 1px;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        #ef4444 0%, 
+        #eab308 50%, 
+        #22c55e 100%
+      );
+      width: var(--durability, 100%);
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+// Slot-specific emoji and labels
+.dedicated-slot.weapon-primary .slot-emoji::before { content: "🔫"; }
+.dedicated-slot.weapon-primary .slot-label::before { content: "PRIMARY"; }
+
+.dedicated-slot.weapon-secondary .slot-emoji::before { content: "🔫"; }
+.dedicated-slot.weapon-secondary .slot-label::before { content: "SECONDARY"; }
+
+.dedicated-slot.weapon-melee .slot-emoji::before { content: "🗡️"; }
+.dedicated-slot.weapon-melee .slot-label::before { content: "MELEE"; }
+
+.dedicated-slot.wallet .slot-emoji::before { content: "💳"; }
+.dedicated-slot.wallet .slot-label::before { content: "WALLET"; }
+
+.dedicated-slot.backpack .slot-emoji::before { content: "🎒"; }
+.dedicated-slot.backpack .slot-label::before { content: "BACKPACK"; }
+
+.dedicated-slot.plate_carrier .slot-emoji::before { content: "🦺"; }
+.dedicated-slot.plate_carrier .slot-label::before { content: "CARRIER"; }
+
+.dedicated-slot.plate .slot-emoji::before { content: "🛡️"; }
+.dedicated-slot.plate .slot-label::before { content: "PLATE"; }
+
+// Item count and durability (same as inventory slots)
+.dedicated-slot-info {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  
+  .item-count {
+    background: linear-gradient(135deg, $sunset-orange-primary, $sunset-orange-secondary);
+    color: $urban-black;
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 6px;
+    font-weight: 700;
+    border: 1px solid rgba($sunset-orange-secondary, 0.8);
+  }
+  
+  .durability-bar {
+    height: 2px;
+    width: 20px;
+    background: rgba($concrete-gray-dark, 0.3);
+    border-radius: 1px;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        #ef4444 0%, 
+        #eab308 50%, 
+        $sunset-orange-primary 100%
+      );
+      width: var(--durability, 100%);
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .dedicated-slots-container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .dedicated-slot {
+    width: 46px;
+    height: 46px;
+  }
+  
+  .slot-emoji {
+    font-size: 16px !important;
+  }
+  
+  .slot-label {
+    font-size: 6px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .dedicated-slots-container {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    padding: 6px;
+    max-height: 60px;
+  }
+  
+  .dedicated-slot {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .slot-emoji {
+    font-size: 14px !important;
+  }
+  
+  .slot-label {
+    font-size: 5px !important;
+  }
+}

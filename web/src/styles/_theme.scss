@@ -1,0 +1,148 @@
+// Sunset Orange, HighRise, Concrete Jungle Theme
+// Color Palette - Orange Primary
+$sunset-orange-primary: #FF6B35;
+$sunset-orange-secondary: #FF8C42;
+$concrete-gray-dark: #6C7B7F;
+$concrete-gray-light: #9BA3A6;
+
+// Additional urban colors
+$concrete-dark: #4A5568;
+$concrete-medium: #718096;
+$steel-blue: #4299E1;
+$urban-black: #1A202C;
+$urban-white: #F7FAFC;
+
+// Theme Variables - Orange as Primary
+$theme-primary: $sunset-orange-primary;
+$theme-secondary: $sunset-orange-secondary;
+$theme-bg-primary: $sunset-orange-primary;  // Orange background
+$theme-bg-secondary: $sunset-orange-secondary;
+$theme-bg-dark: $concrete-gray-dark;
+$theme-text-primary: $urban-white;
+$theme-text-secondary: $sunset-orange-secondary;
+
+// Urban/Industrial Mixins
+@mixin urban-border() {
+  border: 2px solid $concrete-gray-dark;
+  border-style: solid;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@mixin concrete-texture() {
+  background: linear-gradient(135deg, 
+    $concrete-gray-dark 0%, 
+    $concrete-gray-light 50%, 
+    $concrete-gray-dark 100%);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    pointer-events: none;
+  }
+}
+
+@mixin sunset-glow($intensity: 1) {
+  box-shadow: 
+    0 0 #{10px * $intensity} rgba($sunset-orange-primary, 0.3),
+    0 0 #{20px * $intensity} rgba($sunset-orange-secondary, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@mixin highrise-sharp() {
+  border-radius: 0;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+}
+
+@mixin urban-hover-effect() {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-2px);
+    @include sunset-glow(1.5);
+  }
+}
+
+// Rarity Colors
+$rarity-common: $concrete-gray-light;
+$rarity-uncommon: #10B981;
+$rarity-rare: #3B82F6;
+$rarity-epic: #8B5CF6;
+$rarity-legendary: $sunset-orange-primary;
+
+@mixin rarity-border($rarity) {
+  $color: $rarity-common;
+  
+  @if $rarity == 'uncommon' {
+    $color: $rarity-uncommon;
+  } @else if $rarity == 'rare' {
+    $color: $rarity-rare;
+  } @else if $rarity == 'epic' {
+    $color: $rarity-epic;
+  } @else if $rarity == 'legendary' {
+    $color: $rarity-legendary;
+  }
+  
+  border: 2px solid $color;
+  box-shadow: 
+    0 0 10px rgba($color, 0.4),
+    inset 0 0 10px rgba($color, 0.1);
+}
+
+// Rarity-specific classes for dynamic application
+.rarity-common {
+  @include rarity-border('common');
+}
+
+.rarity-uncommon {
+  @include rarity-border('uncommon');
+}
+
+.rarity-rare {
+  @include rarity-border('rare');
+}
+
+.rarity-epic {
+  @include rarity-border('epic');
+}
+
+.rarity-legendary {
+  @include rarity-border('legendary');
+  animation: legendary-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes legendary-pulse {
+  0% {
+    box-shadow: 
+      0 0 10px rgba($rarity-legendary, 0.4),
+      inset 0 0 10px rgba($rarity-legendary, 0.1);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px rgba($rarity-legendary, 0.8),
+      inset 0 0 15px rgba($rarity-legendary, 0.3);
+  }
+}
+
+// Grid and Layout (maintaining compatibility)
+$gridCols: 5;
+$gridRows: 5;
+$gridSize: 10.2vh;
+$gridGap: 2px;
+$containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});

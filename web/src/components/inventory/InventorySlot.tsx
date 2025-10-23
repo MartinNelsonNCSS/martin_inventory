@@ -15,6 +15,7 @@ import { ItemsPayload } from '../../reducers/refreshSlots';
 import { closeTooltip, openTooltip } from '../../store/tooltip';
 import { openContextMenu } from '../../store/contextMenu';
 import { useMergeRefs } from '@floating-ui/react';
+import { getRarityForItem, getRarityClassName } from '../../utils/rarity';
 
 interface SlotProps {
   inventoryId: Inventory['id'];
@@ -119,12 +120,15 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
 
   const refs = useMergeRefs([connectRef, ref]);
 
+  // Get rarity class for the slot if it has an item
+  const rarityClass = isSlotWithItem(item) ? getRarityClassName(getRarityForItem(item)) : '';
+
   return (
     <div
       ref={refs}
       onContextMenu={handleContext}
       onClick={handleClick}
-      className="inventory-slot"
+      className={`inventory-slot ${rarityClass}`}
       style={{
         filter:
           !canPurchaseItem(item, { type: inventoryType, groups: inventoryGroups }) || !canCraftItem(item, inventoryType)

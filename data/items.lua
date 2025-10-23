@@ -3,6 +3,7 @@ return {
 		label = 'Test Burger',
 		weight = 220,
 		degrade = 60,
+		rarity = 'common', -- Example: Common rarity
 		client = {
 			image = 'burger_chicken.png',
 			status = { hunger = 200000 },
@@ -56,6 +57,7 @@ return {
 	['bandage'] = {
 		label = 'Bandage',
 		weight = 115,
+		rarity = 'uncommon', -- Example: Uncommon rarity
 		client = {
 			anim = { dict = 'missheistdockssetup1clipboard@idle_a', clip = 'idle_a', flag = 49 },
 			prop = { model = `prop_rolled_sock_02`, pos = vec3(-0.14, -0.14, -0.08), rot = vec3(-50.0, -50.0, 0.0) },
@@ -66,6 +68,7 @@ return {
 
 	['black_money'] = {
 		label = 'Dirty Money',
+		rarity = 'rare', -- Example: Rare rarity
 	},
 
 	['burger'] = {

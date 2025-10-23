@@ -5,7 +5,11 @@ import { selectRightInventory } from '../../store/inventory';
 const RightInventory: React.FC = () => {
   const rightInventory = useAppSelector(selectRightInventory);
 
-  return <InventoryGrid inventory={rightInventory} />;
+  return (
+    <div className="right-inventory-container">
+      <InventoryGrid inventory={rightInventory} />
+    </div>
+  );
 };
 
 export default RightInventory;

@@ -41,7 +41,7 @@ debugData([
           { slot: 3, name: 'copper', weight: 100, count: 12, metadata: { type: 'Special' } },
           {
             slot: 4,
-            name: 'water',
+            name: 'plate',
             weight: 100,
             count: 1,
             metadata: { description: 'Generic item description' },

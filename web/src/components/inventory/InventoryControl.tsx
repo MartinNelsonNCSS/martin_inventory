@@ -8,6 +8,7 @@ import { onGive } from '../../dnd/onGive';
 import { fetchNui } from '../../utils/fetchNui';
 import { Locale } from '../../store/locale';
 import UsefulControls from './UsefulControls';
+import DedicatedSlots from './DedicatedSlots';
 
 const InventoryControl: React.FC = () => {
   const itemAmount = useAppSelector(selectItemAmount);
@@ -57,6 +58,12 @@ const InventoryControl: React.FC = () => {
             {Locale.ui_close || 'Close'}
           </button>
         </div>
+      </div>
+
+      {/* Equipment Panel */}
+      <div className="equipment-panel">
+        <div className="inventory-label">Equipment</div>
+        <DedicatedSlots />
       </div>
 
       <button className="useful-controls-button" onClick={() => setInfoVisible(true)}>

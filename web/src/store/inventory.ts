@@ -7,7 +7,7 @@ import {
   stackSlotsReducer,
   swapSlotsReducer,
 } from '../reducers';
-import { State } from '../typings';
+import { State, InventoryView } from '../typings';
 
 const initialState: State = {
   leftInventory: {
@@ -28,6 +28,17 @@ const initialState: State = {
   itemAmount: 0,
   shiftPressed: false,
   isBusy: false,
+  // Inventory cycling state
+  currentView: InventoryView.CURRENT,
+  inventoryViews: {
+    current: {
+      id: '',
+      type: '',
+      slots: 0,
+      maxWeight: 0,
+      items: [],
+    },
+  },
 };
 
 export const inventorySlice = createSlice({
@@ -62,6 +73,65 @@ export const inventorySlice = createSlice({
 
       container.weight = action.payload;
     },
+    // Inventory cycling reducers
+    setCurrentView: (state, action: PayloadAction<InventoryView>) => {
+      state.currentView = action.payload;
+      // Update leftInventory based on current view
+      switch (action.payload) {
+        case InventoryView.CURRENT:
+          state.leftInventory = state.inventoryViews.current;
+          break;
+        case InventoryView.BACKPACK:
+          if (state.inventoryViews.backpack) {
+            state.leftInventory = state.inventoryViews.backpack;
+          }
+          break;
+        case InventoryView.GROUND:
+          if (state.inventoryViews.ground) {
+            state.leftInventory = state.inventoryViews.ground;
+          }
+          break;
+      }
+    },
+    setBackpackInventory: (state, action: PayloadAction<any>) => {
+      state.inventoryViews.backpack = action.payload;
+    },
+    setGroundInventory: (state, action: PayloadAction<any>) => {
+      state.inventoryViews.ground = action.payload;
+    },
+    cycleInventoryView: (state) => {
+      const views = Object.values(InventoryView);
+      const currentIndex = views.indexOf(state.currentView);
+      let nextIndex = (currentIndex + 1) % views.length;
+      
+      // Skip unavailable views
+      while (nextIndex !== currentIndex) {
+        const nextView = views[nextIndex];
+        if (nextView === InventoryView.CURRENT || 
+            (nextView === InventoryView.BACKPACK && state.inventoryViews.backpack) ||
+            (nextView === InventoryView.GROUND && state.inventoryViews.ground)) {
+          state.currentView = nextView;
+          // Update leftInventory
+          switch (nextView) {
+            case InventoryView.CURRENT:
+              state.leftInventory = state.inventoryViews.current;
+              break;
+            case InventoryView.BACKPACK:
+              if (state.inventoryViews.backpack) {
+                state.leftInventory = state.inventoryViews.backpack;
+              }
+              break;
+            case InventoryView.GROUND:
+              if (state.inventoryViews.ground) {
+                state.leftInventory = state.inventoryViews.ground;
+              }
+              break;
+          }
+          break;
+        }
+        nextIndex = (nextIndex + 1) % views.length;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(isPending, (state) => {
@@ -95,10 +165,16 @@ export const {
   stackSlots,
   refreshSlots,
   setContainerWeight,
+  setCurrentView,
+  setBackpackInventory,
+  setGroundInventory,
+  cycleInventoryView,
 } = inventorySlice.actions;
 export const selectLeftInventory = (state: RootState) => state.inventory.leftInventory;
 export const selectRightInventory = (state: RootState) => state.inventory.rightInventory;
 export const selectItemAmount = (state: RootState) => state.inventory.itemAmount;
 export const selectIsBusy = (state: RootState) => state.inventory.isBusy;
+export const selectCurrentView = (state: RootState) => state.inventory.currentView;
+export const selectInventoryViews = (state: RootState) => state.inventory.inventoryViews;
 
 export default inventorySlice.reducer;
