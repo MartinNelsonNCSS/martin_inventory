@@ -18,6 +18,15 @@
   border-radius: 6px;
   padding: 12px;
   margin-bottom: 12px;
+  height: auto;
+  max-height: calc(100vh - 220px); // Constrain height
+  overflow: hidden; // Prevent container overflow
+  
+  // Make the inventory grid the scrollable part
+  .inventory-grid-container {
+    flex: 1;
+    min-height: 0; // Allow flexbox to shrink
+  }
 }
 
 // Equipment panel styling - Tarkov military style
@@ -64,6 +73,14 @@ body {
   overflow: hidden !important;
   user-select: none;
   color: $theme-text-primary;
+  
+  // Disable native scrollbars globally
+  -ms-overflow-style: none;  // Internet Explorer 10+
+  scrollbar-width: none;     // Firefox
+  
+  &::-webkit-scrollbar {
+    display: none;           // Chrome, Safari, Opera
+  }
 }
 
 #root {
@@ -74,18 +91,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+// Custom scrollbar styles for inventory elements
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
   background: rgba($concrete-gray-dark, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, $sunset-orange-primary, $sunset-orange-secondary);
   border-radius: 4px;
+  border: 1px solid rgba($urban-black, 0.2);
   
   &:hover {
+    background: linear-gradient(135deg, $sunset-orange-secondary, $sunset-orange-primary);
+    box-shadow: 0 0 8px rgba($sunset-orange-primary, 0.4);
+  }
+  
+  &:active {
     background: $sunset-orange-primary;
   }
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(135deg, 
+    rgba($urban-black, 0.4), 
+    rgba($concrete-gray-dark, 0.2)
+  );
+  border-radius: 4px;
+  border: 1px solid rgba($concrete-gray-dark, 0.1);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba($urban-black, 0.4);
 }
 
 p {
@@ -203,6 +241,7 @@ button:active {
   );
   color: #e0e0e0;
   font-family: 'Consolas', 'Monaco', monospace;
+  overflow: hidden; // Prevent wrapper overflow
   
   // Mobile layout - single column
   grid-template-columns: 1fr;
@@ -374,6 +413,18 @@ button:active {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  height: 100%;
+  max-height: calc(95vh - 32px); // Prevent spillover
+  
+  // Ensure content doesn't overflow
+  > * {
+    flex-shrink: 0;
+    
+    &:last-child {
+      flex: 1;
+      overflow: hidden;
+    }
+  }
 }
 
 .inventory-header {
@@ -417,7 +468,9 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto;
+  overflow: hidden; // Prevent panel overflow
+  height: 100%;
+  max-height: calc(95vh - 32px); // Constrain to viewport
   
   // Responsive padding and gap
   @media (min-width: #{$breakpoint-tablet}) {
@@ -428,6 +481,16 @@ button:active {
   // Stack below main inventory on mobile
   @media (max-width: #{$breakpoint-tablet - 1px}) {
     order: 2;
+  }
+  
+  // Make inventory sections scrollable
+  .secondary-inventory-section,
+  .equipment-panel {
+    flex-shrink: 0;
+    
+    .inventory-grid-wrapper {
+      max-height: calc(50vh - 100px);
+    }
   }
 }
 
@@ -635,6 +698,9 @@ button:active {
   border: 2px solid $sunset-orange-primary;
   border-radius: 8px;
   padding: 12px;
+  height: 100%;
+  max-height: calc(100vh - 180px); // Constrain overall height
+  overflow: hidden; // Prevent wrapper overflow
 }
 
 .inventory-grid-header-wrapper {
@@ -656,20 +722,44 @@ button:active {
   }
 }
 
-// Responsive Tarkov-style inventory grid
+// Responsive Tarkov-style inventory grid - Fixed 5 columns
 .inventory-grid-container {
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns), var(--grid-slot-size));
+  grid-template-columns: repeat(5, var(--grid-slot-size)); // Always 5 columns
   grid-auto-rows: var(--grid-slot-size);
   gap: var(--grid-slot-gap);
   overflow-y: auto;
   padding: 8px;
-  max-height: 500px;
+  height: 100%;
+  max-height: calc(100vh - 200px); // Prevent spillover
   background: rgba(42, 42, 42, 0.4);
   border: 1px solid #444;
   border-radius: 4px;
-  justify-content: start; // Align grid to start instead of center
+  justify-content: center; // Center the 5-column grid
   align-content: start; // Align rows to start
+  
+  // Custom scrollbar styling
+  scrollbar-width: thin;
+  scrollbar-color: rgba($sunset-orange-primary, 0.8) rgba($concrete-gray-dark, 0.3);
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: rgba($concrete-gray-dark, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, $sunset-orange-primary, $sunset-orange-secondary);
+    border-radius: 4px;
+    
+    &:hover {
+      background: $sunset-orange-primary;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($urban-black, 0.2);
+    border-radius: 4px;
+  }
 }
 
 // Responsive Tarkov-style inventory slots
@@ -685,7 +775,7 @@ button:active {
   border-radius: 3px;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
-  background-size: 75% 75%;
+  background-size: 70% 70%; // Reduce size for better centering
   color: #e0e0e0;
   border: 1px solid #555;
   transition: all 0.2s ease;
@@ -693,6 +783,15 @@ button:active {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
+  // Ensure background images layer correctly
+  background-blend-mode: normal;
+  
+  // Make sure the image shows above the gradient
+  &[style*="background-image: url"] {
+    background-size: 70% 70%;
+    background-position: center center;
+  }
   
   &:hover {
     border-color: #777;

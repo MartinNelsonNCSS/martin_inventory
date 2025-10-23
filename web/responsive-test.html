@@ -52,29 +52,52 @@
         <p>Resize your browser window to see how the inventory slots adapt to different screen sizes.</p>
         
         <div class="responsive-demo">
-            <div class="demo-title">Inventory Grid</div>
-            <div class="inventory-grid-container">
-                <!-- Sample inventory slots -->
-                <div class="inventory-slot" style="background-image: url('images/burger.png');"></div>
-                <div class="inventory-slot" style="background-image: url('images/bandage.png');"></div>
-                <div class="inventory-slot" style="background-image: url('images/armour.png');"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot" style="background-image: url('images/ammo-9.png');"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
-                <div class="inventory-slot"></div>
+            <div class="demo-title">Inventory Grid with Custom Scrolling</div>
+            <div class="inventory-grid-wrapper" style="max-height: 300px;">
+                <div class="inventory-grid-container">
+                    <!-- Many sample inventory slots to test scrolling -->
+                    <div class="inventory-slot" style="background-image: url('images/burger.png');"></div>
+                    <div class="inventory-slot" style="background-image: url('images/bandage.png');"></div>
+                    <div class="inventory-slot" style="background-image: url('images/armour.png');"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot" style="background-image: url('images/ammo-9.png');"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <!-- Additional rows to demonstrate scrolling -->
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                    <div class="inventory-slot"></div>
+                </div>
             </div>
         </div>
         
@@ -130,13 +153,30 @@
         </div>
         
         <div style="margin-top: 30px; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px;">
-            <h3 style="color: #FF6B35; margin-top: 0;">Responsive Breakpoints:</h3>
+            <h3 style="color: #FF6B35; margin-top: 0;">Inventory Layout:</h3>
             <ul>
-                <li><strong>Mobile</strong> (0-768px): 42px slots, 8 columns</li>
-                <li><strong>Tablet</strong> (768-1024px): 48px slots, 10 columns</li>
-                <li><strong>Desktop</strong> (1024-1440px): 54px slots, 10 columns</li>
-                <li><strong>Large Desktop</strong> (1440-1920px): 60px slots, 12 columns</li>
-                <li><strong>Ultra-wide</strong> (1920px+): 68px slots, 12 columns</li>
+                <li><strong>Fixed Width</strong>: Always 5 slots wide regardless of screen size</li>
+                <li><strong>Vertical Scaling</strong>: Inventory grows vertically with more items</li>
+                <li><strong>Centered Grid</strong>: 5-column grid centered within container</li>
+                <li><strong>Responsive Slots</strong>: Slot size adapts to screen but columns stay fixed</li>
+            </ul>
+            
+            <h3 style="color: #FF6B35; margin-top: 20px;">Responsive Slot Sizes:</h3>
+            <ul>
+                <li><strong>Mobile</strong> (0-768px): 42px slots, 5 columns</li>
+                <li><strong>Tablet</strong> (768-1024px): 48px slots, 5 columns</li>
+                <li><strong>Desktop</strong> (1024-1440px): 54px slots, 5 columns</li>
+                <li><strong>Large Desktop</strong> (1440-1920px): 60px slots, 5 columns</li>
+                <li><strong>Ultra-wide</strong> (1920px+): 68px slots, 5 columns</li>
+            </ul>
+            
+            <h3 style="color: #FF6B35; margin-top: 20px;">Scrolling Improvements:</h3>
+            <ul>
+                <li><strong>Custom Scrollbars</strong>: Orange-themed scrollbars with hover effects</li>
+                <li><strong>No Overflow</strong>: Inventories constrained within their containers</li>
+                <li><strong>Vertical Scroll</strong>: Both primary and secondary inventories scroll vertically</li>
+                <li><strong>Native Disabled</strong>: Browser default scrollbars hidden globally</li>
+                <li><strong>Height Constraints</strong>: Max height prevents spillover beyond viewport</li>
             </ul>
         </div>
     </div>
