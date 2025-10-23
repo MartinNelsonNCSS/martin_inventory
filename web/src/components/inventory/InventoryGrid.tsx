@@ -14,9 +14,40 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
     [inventory.maxWeight, inventory.items]
   );
   const [page, setPage] = useState(0);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({ threshold: 0.5 });
   const isBusy = useAppSelector((state) => state.inventory.isBusy);
+
+  // Dynamic slot sizing based on container width
+  useEffect(() => {
+    const updateSlotSize = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.clientWidth;
+        const padding = 16; // 8px on each side
+        const gap = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-slot-gap')) || 2;
+        const totalGapWidth = gap * 4; // 4 gaps between 5 columns
+        const availableWidth = containerWidth - padding - totalGapWidth;
+        const slotSize = Math.max(45, Math.floor(availableWidth / 5)); // Minimum 45px, divide by 5 columns
+        
+        // Update CSS custom property for this container's slots
+        containerRef.current.style.setProperty('--dynamic-slot-size', `${slotSize}px`);
+      }
+    };
+
+    // Use ResizeObserver for more accurate container size changes
+    const resizeObserver = new ResizeObserver(() => {
+      updateSlotSize();
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+      updateSlotSize(); // Initial calculation
+    }
+    
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (entry && entry.isIntersecting) {
