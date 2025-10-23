@@ -668,7 +668,8 @@ button:active {
   background: rgba(42, 42, 42, 0.4);
   border: 1px solid #444;
   border-radius: 4px;
-  justify-content: center; // Center grid when not full width
+  justify-content: start; // Align grid to start instead of center
+  align-content: start; // Align rows to start
 }
 
 // Responsive Tarkov-style inventory slots
@@ -680,15 +681,18 @@ button:active {
     rgba(42, 42, 42, 0.9)
   );
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
   border-radius: 3px;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
-  background-size: 80%;
+  background-size: 75% 75%;
   color: #e0e0e0;
   border: 1px solid #555;
   transition: all 0.2s ease;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   
   &:hover {
     border-color: #777;
@@ -783,13 +787,15 @@ button:active {
 }
 
 .inventory-slot-label-box {
-  background: linear-gradient(135deg, rgba($sunset-orange-primary, 0.8), rgba($sunset-orange-secondary, 0.6));
+  background: linear-gradient(135deg, rgba($sunset-orange-primary, 0.9), rgba($sunset-orange-secondary, 0.7));
   color: $urban-black;
   text-align: center;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   border-top: 1px solid rgba($sunset-orange-secondary, 0.8);
   backdrop-filter: blur(2px);
+  position: relative;
+  z-index: 1;
 }
 
 .inventory-slot-label-text {
@@ -818,6 +824,8 @@ button:active {
   text-shadow: none;
   box-shadow: 0 2px 4px rgba($urban-black, 0.3);
   border: 1px solid rgba($sunset-orange-secondary, 0.8);
+  position: relative;
+  z-index: 2;
 }
 
 .item-slot-wrapper {
@@ -825,8 +833,20 @@ button:active {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
+  position: relative;
+  pointer-events: none;
+  
   p {
     font-size: 12px;
+    pointer-events: all;
+  }
+  
+  // Allow interactions on specific elements
+  .item-slot-info-wrapper,
+  .inventory-slot-number,
+  .inventory-slot-label-box {
+    pointer-events: all;
   }
 }
 
@@ -847,8 +867,17 @@ button:active {
   align-self: flex-end;
   padding: 3px;
   gap: 3px;
+  position: relative;
+  z-index: 2;
+  
   p {
     font-size: 12px;
+    background: rgba($urban-black, 0.7);
+    color: $theme-text-primary;
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba($urban-black, 0.8);
   }
 }
 

@@ -1,14 +1,17 @@
-import InventoryGrid from './InventoryGrid';
+import React from 'react';
+import GenericInventoryContainer from './shared/GenericInventoryContainer';
 import { useAppSelector } from '../../store';
 import { selectRightInventory } from '../../store/inventory';
+import { INVENTORY_CONTAINER_CONFIGS } from './shared/inventoryUtils';
 
 const RightInventory: React.FC = () => {
   const rightInventory = useAppSelector(selectRightInventory);
 
   return (
-    <div className="right-inventory-container">
-      <InventoryGrid inventory={rightInventory} />
-    </div>
+    <GenericInventoryContainer
+      inventory={rightInventory}
+      config={INVENTORY_CONTAINER_CONFIGS.right}
+    />
   );
 };
 

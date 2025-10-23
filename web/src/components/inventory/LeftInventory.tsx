@@ -1,11 +1,10 @@
 import React from 'react';
-import InventoryGrid from './InventoryGrid';
-import DedicatedSlots from './DedicatedSlots';
-import InventoryTabs from './InventoryTabs';
 import GroundInventory from './GroundInventory';
 import BackpackInventory from './BackpackInventory';
+import GenericInventoryContainer from './shared/GenericInventoryContainer';
 import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
+import { INVENTORY_CONTAINER_CONFIGS } from './shared/inventoryUtils';
 
 const LeftInventory: React.FC = () => {
   const leftInventory = useAppSelector(selectLeftInventory);
@@ -13,10 +12,10 @@ const LeftInventory: React.FC = () => {
   return (
     <>
       {/* Primary Inventory */}
-      <div className="primary-inventory-container">
-        <div className="inventory-label">Primary Inventory</div>
-        <InventoryGrid inventory={leftInventory} />
-      </div>
+      <GenericInventoryContainer
+        inventory={leftInventory}
+        config={INVENTORY_CONTAINER_CONFIGS.primary}
+      />
       
       {/* Ground Inventory */}
       <GroundInventory />
