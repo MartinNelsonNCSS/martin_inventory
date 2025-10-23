@@ -34,11 +34,11 @@
   display: contents;
 }
 
-// Tarkov-style Equipment Slots
+// Responsive Tarkov-style Equipment Slots
 .dedicated-slot {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: calc(var(--grid-slot-size) + 12px);
+  height: calc(var(--grid-slot-size) + 12px);
   background: linear-gradient(135deg, 
     rgba(#3a3a3a, 0.8), 
     rgba(#2a2a2a, 0.9)
@@ -114,7 +114,7 @@
   }
 }
 
-// Tarkov-style slot placeholders
+// Responsive Tarkov-style slot placeholders
 .dedicated-slot-placeholder {
   display: flex;
   flex-direction: column;
@@ -125,7 +125,7 @@
   pointer-events: none;
   
   .slot-emoji {
-    font-size: 24px;
+    font-size: calc(var(--grid-slot-size) * 0.4);
     opacity: 0.5;
     filter: grayscale(100%) brightness(0.6);
     margin-bottom: 2px;
@@ -133,7 +133,7 @@
   }
   
   .slot-label {
-    font-size: 8px;
+    font-size: calc(var(--grid-slot-size) * 0.13);
     color: #666;
     opacity: 0.7;
     text-transform: uppercase;
@@ -282,44 +282,33 @@
   }
 }
 
-// Responsive Design
-@media (max-width: 1200px) {
+// Responsive Design - using CSS custom properties
+.dedicated-slots-container {
+  gap: var(--grid-slot-gap);
+}
+
+.slot-emoji {
+  font-size: calc(var(--grid-slot-size) * 0.4);
+  transition: all 0.2s ease;
+}
+
+.slot-label {
+  font-size: calc(var(--grid-slot-size) * 0.13);
+  transition: all 0.2s ease;
+}
+
+// Grid layout adjustments for different screen sizes
+@media (max-width: #{$breakpoint-tablet}) {
   .dedicated-slots-container {
     grid-template-columns: repeat(6, 1fr);
   }
-  
-  .dedicated-slot {
-    width: 46px;
-    height: 46px;
-  }
-  
-  .slot-emoji {
-    font-size: 16px !important;
-  }
-  
-  .slot-label {
-    font-size: 6px !important;
-  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$breakpoint-mobile}) {
   .dedicated-slots-container {
     grid-template-columns: repeat(5, 1fr);
-    gap: 4px;
+    gap: calc(var(--grid-slot-gap) * 0.8);
     padding: 6px;
-    max-height: 60px;
-  }
-  
-  .dedicated-slot {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .slot-emoji {
-    font-size: 14px !important;
-  }
-  
-  .slot-label {
-    font-size: 5px !important;
+    max-height: calc(var(--grid-slot-size) + 20px);
   }
 }

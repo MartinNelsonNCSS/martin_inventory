@@ -53,11 +53,6 @@ const Inventory: React.FC = () => {
                 <div className="character-silhouette">
                   <div className="character-avatar">👤</div>
                 </div>
-                
-                {/* Equipment slots around character */}
-                <div className="equipment-slots-overlay">
-                  <DedicatedSlots />
-                </div>
               </div>
               
               {/* Character stats */}
@@ -67,14 +62,22 @@ const Inventory: React.FC = () => {
                   <div className="bar"><div className="fill" style={{width: '100%'}}></div></div>
                 </div>
                 <div className="stat-bar energy">
-                  <span>Energy</span>
+                  <span>Armour</span>
                   <div className="bar"><div className="fill" style={{width: '75%'}}></div></div>
                 </div>
                 <div className="stat-bar hydration">
                   <span>Hydration</span>
                   <div className="bar"><div className="fill" style={{width: '60%'}}></div></div>
                 </div>
+                <div className="stat-bar hydration">
+                  <span>Food</span>
+                  <div className="bar"><div className="fill" style={{width: '90%'}}></div></div>
+                </div>
               </div>
+              {/* Action buttons */}
+            <div className="action-panel">
+              <InventoryControl />
+            </div>
             </div>
           </div>
           
@@ -87,18 +90,19 @@ const Inventory: React.FC = () => {
               </div>
             </div>
             <LeftInventory />
+            <RightInventory />
           </div>
           
           {/* Right Panel - Secondary Inventory & Actions */}
           <div className="tarkov-right-panel">
             <div className="secondary-inventory-section">
-              <RightInventory />
+              
+            </div>
+            <div className="equipment-panel">
+              <div className="inventory-label">Equipment</div>
+              <DedicatedSlots />
             </div>
             
-            {/* Action buttons */}
-            <div className="action-panel">
-              <InventoryControl />
-            </div>
           </div>
           
           <Tooltip />
