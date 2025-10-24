@@ -106,10 +106,11 @@ const Inventory: React.FC = () => {
             <BackpackInventory/>
           </div>
           
-          <Tooltip />
-          <InventoryContext />
+          
         </div>
       </Fade>
+      <Tooltip />
+      <InventoryContext />
       <InventoryHotbar />
     </>
   );
