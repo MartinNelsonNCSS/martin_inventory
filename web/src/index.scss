@@ -239,10 +239,7 @@ button:active {
   width: 66.67%; // 2/3rds of the screen width
   margin: 0 auto;
   padding: 16px;
-  background: linear-gradient(135deg, 
-    rgba(26, 26, 26, 0.665), // Reduced from 0.95 to 0.665 (30% more transparent)
-    rgba(45, 45, 45, 0.63) // Reduced from 0.9 to 0.63 (30% more transparent)
-  );
+  background: transparent; // Removed grey gradient background for clean viewport
   color: #e0e0e0;
   font-family: 'Consolas', 'Monaco', monospace;
   overflow: hidden; // Prevent wrapper overflow
