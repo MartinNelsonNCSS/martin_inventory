@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Inventory } from '../../typings';
 import WeightBar from '../utils/WeightBar';
 import InventorySlot from './InventorySlot';
-import { getTotalWeight } from '../../helpers';
+import { getTotalWeight, isDedicatedSlot } from '../../helpers';
 import { useAppSelector } from '../../store';
 import { useIntersection } from '../../hooks/useIntersection';
 
@@ -17,6 +17,18 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({ threshold: 0.5 });
   const isBusy = useAppSelector((state) => state.inventory.isBusy);
+
+  // Filter out dedicated equipment slots from main inventory display
+  const filteredItems = useMemo(() => {
+    // Only filter for player inventory type
+    if (inventory.type !== 'player') {
+      return inventory.items;
+    }
+    
+    return inventory.items.filter((item) => {
+      return !isDedicatedSlot(item.slot, inventory.slots);
+    });
+  }, [inventory.items, inventory.type, inventory.slots]);
 
   // Dynamic slot sizing based on container width
   useEffect(() => {
@@ -70,7 +82,7 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
         </div>
         <div className="inventory-grid-container" ref={containerRef}>
           <>
-            {inventory.items.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
+            {filteredItems.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
               <InventorySlot
                 key={`${inventory.type}-${inventory.id}-${item.slot}`}
                 item={item}

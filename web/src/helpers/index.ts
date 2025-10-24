@@ -4,6 +4,19 @@ import { store } from '../store';
 import { Items } from '../store/items';
 import { imagepath } from '../store/imagepath';
 import { fetchNui } from '../utils/fetchNui';
+import { DedicatedSlotType } from '../typings/item';
+
+// Check if an item is whitelisted for a specific dedicated slot
+export const isItemAllowedInSlot = (itemName: string, slotType: DedicatedSlotType): boolean => {
+  const itemData = Items[itemName];
+  return itemData?.slot === slotType;
+};
+
+// Check if a slot is a dedicated equipment slot (based on slot index)
+export const isDedicatedSlot = (slotIndex: number, totalSlots: number): boolean => {
+  // Dedicated slots are the last 8 slots
+  return slotIndex > totalSlots - 8;
+};
 
 export const canPurchaseItem = (item: Slot, inventory: { type: Inventory['type']; groups: Inventory['groups'] }) => {
   if (inventory.type !== 'shop' || !isSlotWithItem(item)) return true;

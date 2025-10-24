@@ -1,5 +1,7 @@
 export type RarityType = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
+export type DedicatedSlotType = 'backpack' | 'money' | 'vest' | 'weapon-secondary' | 'phone' | 'weapon-primary' | 'weapon-melee' | 'wallet';
+
 export type ItemData = {
   name: string;
   label: string;
@@ -12,4 +14,5 @@ export type ItemData = {
   ammoName?: string;
   image?: string;
   rarity?: RarityType;
+  slot?: DedicatedSlotType; // Dedicated slot this item can be placed in
 };

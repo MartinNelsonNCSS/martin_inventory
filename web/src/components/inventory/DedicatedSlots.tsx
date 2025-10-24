@@ -1,13 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import InventorySlot from './InventorySlot';
 import { InventoryType, Slot } from '../../typings';
 import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
+import { DedicatedSlotType } from '../../typings/item';
+import { isItemAllowedInSlot } from '../../helpers';
+import { Items } from '../../store/items';
 
 interface DedicatedSlotConfig {
   slotIndex: number; // Actual slot number in inventory (1-based)
-  type: string;
+  type: DedicatedSlotType;
   label: string;
+  keybind?: string; // Display keybind hint
   position: {
     top?: string;
     bottom?: string;
@@ -33,13 +37,15 @@ const DedicatedSlots: React.FC = () => {
       { 
         slotIndex: totalSlots - 7, // slot for backpack
         type: 'backpack', 
-        label: 'Backpack', 
+        label: 'Backpack',
+        keybind: 'F2',
         position: { top: '20px', left: '0px' }
       },
       { 
         slotIndex: totalSlots - 6, // slot for money
         type: 'money', 
-        label: 'Money', 
+        label: 'Money',
+        keybind: 'F3', 
         position: { top: '20px', right: '0px' }
       },
       
@@ -47,13 +53,15 @@ const DedicatedSlots: React.FC = () => {
       { 
         slotIndex: totalSlots - 5, // slot for vest
         type: 'vest', 
-        label: 'Heavy Bulletproof Vest', 
+        label: 'Heavy Bulletproof Vest',
+        keybind: 'F4',
         position: { top: '100px', left: '0px' }
       },
       { 
         slotIndex: totalSlots - 4, // slot for secondary weapon
         type: 'weapon-secondary', 
-        label: 'Secondary Weapon', 
+        label: 'Secondary Weapon',
+        keybind: 'F5',
         position: { top: '100px', right: '0px' }
       },
       
@@ -61,13 +69,15 @@ const DedicatedSlots: React.FC = () => {
       { 
         slotIndex: totalSlots - 3, // slot for phone
         type: 'phone', 
-        label: 'Phone', 
+        label: 'Phone',
+        keybind: 'F6',
         position: { top: '200px', left: '0px' }
       },
       { 
         slotIndex: totalSlots - 2, // slot for primary weapon
         type: 'weapon-primary', 
-        label: 'Primary Weapon', 
+        label: 'Primary Weapon',
+        keybind: 'F7',
         position: { top: '200px', right: '0px' }
       },
       
@@ -75,18 +85,26 @@ const DedicatedSlots: React.FC = () => {
       { 
         slotIndex: totalSlots - 1, // slot for melee weapon
         type: 'weapon-melee', 
-        label: 'Melee Weapon', 
+        label: 'Melee Weapon',
+        keybind: 'F8',
         position: { top: '280px', left: '0px'}
       },
       
       { 
         slotIndex: totalSlots, // last slot for wallet
         type: 'wallet', 
-        label: 'Wallet', 
+        label: 'Wallet',
+        keybind: 'F9',
         position: { top: '280px', right: '0px' }
       },
     ];
   }, [leftInventory.slots]);
+
+  // Validate that items in dedicated slots are whitelisted
+  const validateSlotItem = (slot: Slot, slotType: DedicatedSlotType): boolean => {
+    if (!slot.name) return true; // Empty slots are always valid
+    return isItemAllowedInSlot(slot.name, slotType);
+  };
 
   return (
     <div className="dedicated-slots-container">
@@ -107,12 +125,15 @@ const DedicatedSlots: React.FC = () => {
             weight: 0,
           };
 
+          // Check if item is valid for this slot
+          const isValid = validateSlotItem(slot, config.type);
+
           return (
             <div 
               key={config.slotIndex}
-              className={`equipment-slot-positioned equipment-${config.type}`}
+              className={`equipment-slot-positioned equipment-${config.type} ${!isValid ? 'invalid-item' : ''}`}
               style={config.position}
-              title={config.label}
+              title={`${config.label}${config.keybind ? ` (${config.keybind})` : ''}`}
             >
               <InventorySlot
                 item={slot}
@@ -120,6 +141,9 @@ const DedicatedSlots: React.FC = () => {
                 inventoryGroups={leftInventory.groups || {}}
                 inventoryId={leftInventory.id || "player"}
               />
+              {config.keybind && (
+                <div className="slot-keybind-hint">{config.keybind}</div>
+              )}
             </div>
           );
         })}

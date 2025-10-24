@@ -99,6 +99,7 @@ return {
 		label = 'Parachute',
 		weight = 8000,
 		stack = false,
+		slot = 'backpack', -- Dedicated slot: can only be equipped in backpack slot
 		client = {
 			anim = { dict = 'clothingshirt', clip = 'try_shirt_positive_d' },
 			usetime = 1500
@@ -146,6 +147,7 @@ return {
 		weight = 190,
 		stack = false,
 		consume = 0,
+		slot = 'phone', -- Dedicated slot: can only be equipped in phone slot
 		client = {
 			add = function(total)
 				if total > 0 then
@@ -163,6 +165,7 @@ return {
 
 	['money'] = {
 		label = 'Money',
+		slot = 'money', -- Dedicated slot: can only be equipped in money slot
 	},
 
 	['mustard'] = {
@@ -201,6 +204,7 @@ return {
 		label = 'Bulletproof Vest',
 		weight = 3000,
 		stack = false,
+		slot = 'vest', -- Dedicated slot: can only be equipped in vest slot
 		client = {
 			anim = { dict = 'clothingshirt', clip = 'try_shirt_positive_d' },
 			usetime = 3500
@@ -224,5 +228,16 @@ return {
 	['scrapmetal'] = {
 		label = 'Scrap Metal',
 		weight = 80,
+	},
+
+	['wallet'] = {
+		label = 'Wallet',
+		weight = 50,
+		stack = false,
+		slot = 'wallet', -- Dedicated slot: can only be equipped in wallet slot
+		consume = 0,
+		client = {
+			image = 'wallet.png'
+		}
 	},
 }
