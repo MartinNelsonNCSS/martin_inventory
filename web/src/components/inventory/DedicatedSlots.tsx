@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import InventorySlot from './InventorySlot';
 import { InventoryType, Slot } from '../../typings';
+import { useAppSelector } from '../../store';
+import { selectLeftInventory } from '../../store/inventory';
 
-interface DedicatedSlotData {
-  slot: number;
+interface DedicatedSlotConfig {
+  slotIndex: number; // Actual slot number in inventory (1-based)
   type: string;
-  name: string;
-  isEmpty: boolean;
+  label: string;
   position: {
     top?: string;
     bottom?: string;
@@ -17,82 +18,75 @@ interface DedicatedSlotData {
 }
 
 const DedicatedSlots: React.FC = () => {
-  // Create dedicated slot configurations matching reference image layout
-  const dedicatedSlots: DedicatedSlotData[] = [
-    // Top row - around head area
-    { 
-      slot: -6, 
-      type: 'backpack', 
-      name: 'Backpack', 
-      isEmpty: true,
-      position: { top: '20px', left: '0px' } // Brought closer from -70px
-    },
-    { 
-      slot: -1, 
-      type: 'money', 
-      name: 'Money', 
-      isEmpty: true,
-      position: { top: '20px', right: '0px' } // Brought closer from -70px
-    },
-    
-    // Mid-upper row - around chest/shoulders
-    { 
-      slot: -4, 
-      type: 'vest', 
-      name: 'Heavy Bulletproof Vest', 
-      isEmpty: true,
-      position: { top: '100px', left: '0px' } // Brought closer from -70px
-    },
-    { 
-      slot: -2, 
-      type: 'weapon-secondary', 
-      name: 'Secondary Weapon', 
-      isEmpty: true,
-      position: { top: '100px', right: '0px' } // Brought closer from -70px
-    },
-    
-    // Lower row - around waist/legs  
-    { 
-      slot: -7, 
-      type: 'phone', 
-      name: 'Phone', 
-      isEmpty: true,
-      position: { top: '200px', left: '0px' } // Brought closer from -70px
-    },
-    { 
-      slot: -1, 
-      type: 'weapon-primary', 
-      name: 'Primary Weapon', 
-      isEmpty: true,
-      position: { top: '200px', right: '0px' } // Brought closer from -70px
-    },
-    
-    // Bottom row - around feet/lower body
-    { 
-      slot: -3, 
-      type: 'weapon-melee', 
-      name: 'Melee Weapon', 
-      isEmpty: true,
-      position: { top: '280px', left: '0px'} // Brought closer from -70px
-    },
-    
-    { 
-      slot: -8, 
-      type: 'wallet', 
-      name: 'Wallet', 
-      isEmpty: true,
-      position: { top: '280px', right: '0px' } // Brought closer from -70px
-    },
-  ];
+  const leftInventory = useAppSelector(selectLeftInventory);
 
-  // Convert dedicated slot data to inventory slot format
-  const createSlotItem = (slotData: DedicatedSlotData): Slot => ({
-    slot: slotData.slot,
-    name: slotData.isEmpty ? undefined : slotData.name,
-    count: slotData.isEmpty ? undefined : 1,
-    weight: 0,
-    metadata: slotData.isEmpty ? undefined : { dedicatedSlot: slotData.type },
-  });
+  // Define which inventory slots are used for dedicated equipment
+  // These should be the last slots in the player's inventory
+  // Adjust these slot numbers based on your server configuration
+  const dedicatedSlotConfigs: DedicatedSlotConfig[] = useMemo(() => {
+    const totalSlots = leftInventory.slots;
+    
+    // Use the last 8 slots for dedicated equipment
+    // This assumes player has at least 8 slots in their inventory
+    return [
+      // Top row - around head area
+      { 
+        slotIndex: totalSlots - 7, // slot for backpack
+        type: 'backpack', 
+        label: 'Backpack', 
+        position: { top: '20px', left: '0px' }
+      },
+      { 
+        slotIndex: totalSlots - 6, // slot for money
+        type: 'money', 
+        label: 'Money', 
+        position: { top: '20px', right: '0px' }
+      },
+      
+      // Mid-upper row - around chest/shoulders
+      { 
+        slotIndex: totalSlots - 5, // slot for vest
+        type: 'vest', 
+        label: 'Heavy Bulletproof Vest', 
+        position: { top: '100px', left: '0px' }
+      },
+      { 
+        slotIndex: totalSlots - 4, // slot for secondary weapon
+        type: 'weapon-secondary', 
+        label: 'Secondary Weapon', 
+        position: { top: '100px', right: '0px' }
+      },
+      
+      // Lower row - around waist/legs  
+      { 
+        slotIndex: totalSlots - 3, // slot for phone
+        type: 'phone', 
+        label: 'Phone', 
+        position: { top: '200px', left: '0px' }
+      },
+      { 
+        slotIndex: totalSlots - 2, // slot for primary weapon
+        type: 'weapon-primary', 
+        label: 'Primary Weapon', 
+        position: { top: '200px', right: '0px' }
+      },
+      
+      // Bottom row - around feet/lower body
+      { 
+        slotIndex: totalSlots - 1, // slot for melee weapon
+        type: 'weapon-melee', 
+        label: 'Melee Weapon', 
+        position: { top: '280px', left: '0px'}
+      },
+      
+      { 
+        slotIndex: totalSlots, // last slot for wallet
+        type: 'wallet', 
+        label: 'Wallet', 
+        position: { top: '280px', right: '0px' }
+      },
+    ];
+  }, [leftInventory.slots]);
 
   return (
     <div className="dedicated-slots-container">
@@ -101,20 +95,34 @@ const DedicatedSlots: React.FC = () => {
         
       </div>
       {/* Equipment slots positioned anatomically around the silhouette */}
-        {dedicatedSlots.map((slotData, index) => (
-          <div 
-            key={slotData.slot}
-            className={`equipment-slot-positioned equipment-${slotData.type}`}
-            style={slotData.position}
-          >
-            <InventorySlot
-              item={createSlotItem(slotData)}
-              inventoryType={InventoryType.PLAYER}
-              inventoryGroups={{}}
-              inventoryId="player"
-            />
-          </div>
-        ))}
+        {dedicatedSlotConfigs.map((config) => {
+          // Get the actual slot from the inventory
+          const actualSlot = leftInventory.items[config.slotIndex - 1];
+          
+          // If slot doesn't exist (inventory not loaded yet), create empty slot
+          const slot: Slot = actualSlot || {
+            slot: config.slotIndex,
+            name: undefined,
+            count: undefined,
+            weight: 0,
+          };
+
+          return (
+            <div 
+              key={config.slotIndex}
+              className={`equipment-slot-positioned equipment-${config.type}`}
+              style={config.position}
+              title={config.label}
+            >
+              <InventorySlot
+                item={slot}
+                inventoryType={InventoryType.PLAYER}
+                inventoryGroups={leftInventory.groups || {}}
+                inventoryId={leftInventory.id || "player"}
+              />
+            </div>
+          );
+        })}
     </div>
   );
 };
