@@ -7,7 +7,7 @@
 │  EQUIPMENT PANEL (Right Side)                       │
 │                                                      │
 │  ┌─────────┐              ┌─────────┐              │
-│  │Backpack │              │  Money  │              │
+│  │Backpack │              │  Plate  │              │
 │  │   F2    │              │   F3    │              │
 │  └─────────┘              └─────────┘              │
 │       ↑                        ↑                    │
@@ -89,7 +89,7 @@
 | Item Category | Slot Type | Items |
 |---------------|-----------|-------|
 | **Backpacks** | `backpack` | parachute, backpack, duffel_bag |
-| **Currency** | `money` | money, black_money, marked_bills |
+| **Armor Plates** | `plate` | armor_plate, ballistic_plate, ceramic_plate |
 | **Armor** | `vest` | armour, bulletproof_vest, plate_carrier |
 | **Sidearms** | `weapon-secondary` | WEAPON_PISTOL, WEAPON_COMBATPISTOL, WEAPON_MICROSMG |
 | **Communication** | `phone` | phone, radio |
@@ -101,8 +101,8 @@
 
 ```
 F2 = Backpack Slot     (e.g., parachute)
-F3 = Money Slot        (e.g., cash)
-F4 = Vest Slot         (e.g., armor)
+F3 = Armor Plate Slot  (e.g., ballistic plate)
+F4 = Vest Slot         (e.g., plate carrier)
 F5 = Secondary Weapon  (e.g., pistol)
 F6 = Phone Slot        (e.g., phone)
 F7 = Primary Weapon    (e.g., rifle)
@@ -178,13 +178,13 @@ Main Inventory Grid:        Equipment Panel:
 ### Adding New Item
 ```lua
 -- In data/items.lua
-['tactical_backpack'] = {
-    label = 'Tactical Backpack',
-    weight = 1500,
-    stack = false,
-    slot = 'backpack', -- ✅ Whitelist for backpack slot
+['armor_plate'] = {
+    label = 'Armor Plate',
+    weight = 500,
+    stack = true,
+    slot = 'plate', -- ✅ Whitelist for armor plate slot
     client = {
-        image = 'backpack_tactical.png'
+        image = 'armor_plate.png'
     }
 }
 ```

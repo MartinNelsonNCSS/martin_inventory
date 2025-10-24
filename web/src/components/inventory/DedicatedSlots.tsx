@@ -42,9 +42,9 @@ const DedicatedSlots: React.FC = () => {
         position: { top: '20px', left: '0px' }
       },
       { 
-        slotIndex: totalSlots - 6, // slot for money
-        type: 'money', 
-        label: 'Money',
+        slotIndex: totalSlots - 6, // slot for plate
+        type: 'plate', 
+        label: 'Armor Plate',
         keybind: 'F3', 
         position: { top: '20px', right: '0px' }
       },

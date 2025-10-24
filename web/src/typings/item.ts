@@ -1,6 +1,6 @@
 export type RarityType = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
-export type DedicatedSlotType = 'backpack' | 'money' | 'vest' | 'weapon-secondary' | 'phone' | 'weapon-primary' | 'weapon-melee' | 'wallet';
+export type DedicatedSlotType = 'backpack' | 'plate' | 'vest' | 'weapon-secondary' | 'phone' | 'weapon-primary' | 'weapon-melee' | 'wallet';
 
 export type ItemData = {
   name: string;

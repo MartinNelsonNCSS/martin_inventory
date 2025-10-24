@@ -165,7 +165,16 @@ return {
 
 	['money'] = {
 		label = 'Money',
-		slot = 'money', -- Dedicated slot: can only be equipped in money slot
+	},
+
+	['armor_plate'] = {
+		label = 'Armor Plate',
+		weight = 500,
+		stack = true,
+		slot = 'plate', -- Dedicated slot: armor plate for plate carrier
+		client = {
+			image = 'armor_plate.png'
+		}
 	},
 
 	['mustard'] = {

@@ -25,8 +25,8 @@ The dedicated slots system now supports **item whitelisting** and **keybindings*
 | Slot Type | Purpose | Keybind | Slot Index |
 |-----------|---------|---------|------------|
 | `backpack` | Equippable backpack (adds inventory space) | F2 | slots-7 |
-| `money` | Cash/money storage | F3 | slots-6 |
-| `vest` | Armor/bulletproof vest | F4 | slots-5 |
+| `plate` | Armor plate for plate carrier | F3 | slots-6 |
+| `vest` | Armor/bulletproof vest/plate carrier | F4 | slots-5 |
 | `weapon-secondary` | Secondary weapon (pistol/SMG) | F5 | slots-4 |
 | `phone` | Mobile phone | F6 | slots-3 |
 | `weapon-primary` | Primary weapon (rifle/shotgun) | F7 | slots-2 |
@@ -74,6 +74,13 @@ Add the `slot` property to item definitions:
 ['money'] = {
     label = 'Money',
     slot = 'money', -- ✅ Whitelist for money slot
+},
+
+['armor_plate'] = {
+    label = 'Armor Plate',
+    weight = 500,
+    stack = true,
+    slot = 'plate', -- ✅ Whitelist for armor plate slot
 },
 
 ['parachute'] = {
@@ -158,6 +165,12 @@ Add the `slot` property to weapon definitions based on weapon type:
 - Mobile phones
 - Radio devices (if categorized as phone)
 
+**Plate** (`plate`):
+- Armor plates
+- Ballistic plates
+- Ceramic plates
+- Steel plates
+
 **Wallet** (`wallet`):
 - Wallet items
 - ID holders
@@ -167,6 +180,8 @@ Add the `slot` property to weapon definitions based on weapon type:
 - Cash
 - Black money
 - Marked bills
+
+(Note: Money is now a regular inventory item, not a dedicated slot)
 
 ## Validation Rules
 
